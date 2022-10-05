@@ -3,7 +3,7 @@
     <h1>{{ $count }}</h1>
     こんにちは {{ $name }}さん<br>
     
-    <input type="text" wire:model="name">
+    <input type="text" wire:model="name"><br>
     {{-- ms待ってから通信 --}}
     {{-- <input type="text" wire:model.debounce.2000ms="name"> --}}
     {{-- フォーカスが外れたタイミングで --}}
@@ -11,5 +11,6 @@
     {{-- submitされたタイミングで --}}
     {{-- <input type="text" wire:model.defer="name"> --}}
 
+    <button wire:mouseover="mouseOver">hover</button>
 
 </div>
