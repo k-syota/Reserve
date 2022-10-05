@@ -13,6 +13,17 @@ class Counter extends Component
     public function increment(){
         $this->count++;
     }
+
+    public function mount()
+    {
+        $this->name = "mount";
+    }
+
+    public function updated()
+    {
+        $this->name = "updated";
+    }
+
     public function render()
     {
         return view('livewire.counter');
