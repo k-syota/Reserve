@@ -6,13 +6,13 @@
             <div class="text-red-400">{{ $message }}</div>
         @enderror
         <label for="name">name</label>
-        <input type="text" id="name" wire:model="name"><br>
+        <input type="text" id="name" wire:model.lazy="name"><br>
 
         @error('email')
             <div class="text-red-400">{{ $message }}</div>
         @enderror
         <label for="email">email</label>
-        <input type="email" id="email" wire:model="email"><br>
+        <input type="email" id="email" wire:model.lazy="email"><br>
 
         @error('password')
             <div class="text-red-400">{{ $message }}</div>

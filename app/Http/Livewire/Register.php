@@ -19,6 +19,11 @@ class Register extends Component
         'password' => 'required|string|min:8',
     ];
 
+    public function updated($prop)
+    {
+        $this->validateOnly($prop);
+    }
+
     public function register()
     {
         $this->validate();
