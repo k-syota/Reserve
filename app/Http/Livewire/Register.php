@@ -32,6 +32,9 @@ class Register extends Component
             'email'=> $this->email,
             'password'=> Hash::make($this->password),
         ]);
+
+        session()->flash('message',"success");
+        return to_route('livewire-test.index');
     }
 
     public function render()
