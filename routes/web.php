@@ -35,3 +35,16 @@ Route::controller(LivewireTestController::class)->prefix('livewire-test')->group
 });
 
 Route::get('alpine-test/index',[AlpineTestController::class,'index']);
+
+
+Route::prefix('manager')->middleware('can:manager-higher')->group(function(){
+    Route::get('index',function(){
+        dd('mabager');
+    });
+});
+
+Route::middleware('can:user-higher')->group(function(){
+    Route::get('index',function(){
+        dd('user');
+    });
+});
