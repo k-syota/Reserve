@@ -55,9 +55,9 @@
 
                         <div class="md:flex justify-between items-end mt-4">
                             <div>
-                                <x-jet-label for="max_peple" value="定員" />
-                                <x-jet-input id="max_peple" class="block mt-1 w-full" type="number" name="max_peple"
-                                    :value="old('max_peple')" required />
+                                <x-jet-label for="max_people" value="定員" />
+                                <x-jet-input id="max_people" class="block mt-1 w-full" type="number" name="max_people"
+                                    :value="old('max_people')" required />
                             </div>
                             <div class="flex space-x-4 justify-around">
                                 <input type="radio" name="is_visible" checked value="1">表示
