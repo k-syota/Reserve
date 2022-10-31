@@ -43,24 +43,36 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request)
     {
+
+        $check = DB::table("events")
+        ->whereDate("start_date",$request["event_date"])
+        ->whereTime("end_date",">",$request["start_time"])
+        ->whereTime("start_date","<",$request["end_time"])
+        ->exists();
+
         $start = $request["event_date"]. " " .$request["start_time"];
         $start_date = Carbon::createFromFormat("Y-m-d H:i",$start);
 
         $end = $request["event_date"]. " " .$request["end_time"];
         $end_date = Carbon::createFromFormat("Y-m-d H:i",$end);
 
-        Event::create([
-            "name" => $request["event_name"],
-            "information" => $request["information"],
-            "start_date" => $start_date,
-            "end_date" => $end_date,
-            "max_people" => $request["max_people"],
-            "is_visible" => $request["is_visible"],
-        ]);
-
-        session()->flash("status","登録OKです");
-
-        return to_route("events.index");
+        if(!$check){
+            Event::create([
+                "name" => $request["event_name"],
+                "information" => $request["information"],
+                "start_date" => $start_date,
+                "end_date" => $end_date,
+                "max_people" => $request["max_people"],
+                "is_visible" => $request["is_visible"],
+            ]);
+    
+            session()->flash("status","登録OKです");
+    
+            return to_route("events.index");
+        }else{
+            session()->flash("status","この時間帯は他の予約があります");
+            return view("manager.events.create");
+        }
     }
 
     /**
