@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Models\Event;
+use App\Services\EventServices;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -44,17 +45,13 @@ class EventController extends Controller
     public function store(StoreEventRequest $request)
     {
 
-        $check = DB::table("events")
-        ->whereDate("start_date",$request["event_date"])
-        ->whereTime("end_date",">",$request["start_time"])
-        ->whereTime("start_date","<",$request["end_time"])
-        ->exists();
+        $check = EventServices::checkEventDuplication(
+            $request["event_date"],$request["start_time"],$request["end_time"]
+        );
 
-        $start = $request["event_date"]. " " .$request["start_time"];
-        $start_date = Carbon::createFromFormat("Y-m-d H:i",$start);
 
-        $end = $request["event_date"]. " " .$request["end_time"];
-        $end_date = Carbon::createFromFormat("Y-m-d H:i",$end);
+        $start_date = EventServices::joinDateAndTime($request["event_date"],$request["start_time"]);
+        $end_date = EventServices::joinDateAndTime($request["event_date"],$request["end_time"]);
 
         if(!$check){
             Event::create([
