@@ -80,7 +80,6 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        // dd($event);
         $event = Event::findOrFail($event->id);
         $eventDate = $event->eventDate;
         $startTime = $event->startTime;
@@ -96,7 +95,11 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        //
+        $event = Event::findOrFail($event->id);
+        $eventDate = $event->editEventDate;
+        $startTime = $event->startTime;
+        $endTime = $event->endTime;
+        return view("manager.events.edit",compact("event","eventDate","startTime","endTime"));
     }
 
     /**
@@ -108,7 +111,35 @@ class EventController extends Controller
      */
     public function update(UpdateEventRequest $request, Event $event)
     {
-        //
+        $check = EventServices::countEventDuplication(
+            $request["event_date"],$request["start_time"],$request["end_time"]
+        );
+
+
+        $start_date = EventServices::joinDateAndTime($request["event_date"],$request["start_time"]);
+        $end_date = EventServices::joinDateAndTime($request["event_date"],$request["end_time"]);
+
+        if($check <= 1){
+            $event = Event::findOrFail($event->id);
+            $event->update([
+                "name" => $request["event_name"],
+                "information" => $request["information"],
+                "start_date" => $start_date,
+                "end_date" => $end_date,
+                "max_people" => $request["max_people"],
+                "is_visible" => $request["is_visible"],
+            ]);
+    
+            session()->flash("status","更新OKです");
+    
+            return to_route("events.index");
+        }else{
+            session()->flash("status","この時間帯は他の予約があります");
+            $eventDate = $event->editEventDate;
+            $startTime = $event->startTime;
+            $endTime = $event->endTime;
+            return view("manager.events.edit",compact("event","eventDate","startTime","endTime"));
+        }
     }
 
     /**
