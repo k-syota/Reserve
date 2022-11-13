@@ -23,11 +23,12 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
+        Event::factory(100)->create();
+
         $this->call([
             UserSeeder::class,
+            ReservationSeeder::class,
         ]);
-
-        Event::factory(100)->create();
         
     }
 }
