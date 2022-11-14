@@ -20,6 +20,12 @@ class Event extends Model
         "is_visible",
     ];
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class,"reservations")
+        ->withPivot('id','number_of_people','canceled_date');
+    }
+
     protected function eventDate():Attribute
     {
         return new Attribute(
