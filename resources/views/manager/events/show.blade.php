@@ -17,7 +17,7 @@
                         </div>
                     @endif
 
-                    <form method="get" action="{{ route('events.edit',['event' => $event->id]) }}">
+                    <form method="get" action="{{ route('events.edit', ['event' => $event->id]) }}">
                         <div>
                             <x-jet-label for="event_name" value="イベント名" />
                             {{ $event->name }}
@@ -31,7 +31,7 @@
                         <div class="md:flex justify-between mt-4">
                             <div>
                                 <x-jet-label for="event_date" value="イベントの日付" />
-                                    {{ $eventDate }}
+                                {{ $eventDate }}
                             </div>
 
                             <div>
@@ -58,9 +58,9 @@
                                 @endif
                             </div>
                             @if ($event->eventDate >= \Carbon\Carbon::today()->format('Y年m年d日'))
-                            <x-jet-button class="mt-4">
-                                編集
-                            </x-jet-button>
+                                <x-jet-button class="mt-4">
+                                    編集
+                                </x-jet-button>
                             @endif
                         </div>
                     </form>
@@ -73,12 +73,35 @@
             <div class="py-8 bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="max-w-2xl mx-auto">
                     @if (!$users->isEmpty())
-                        @foreach ($reservations as $reservation)
-                            @if (is_null($reservation['canceled_date']))
-                            {{ $reservation['name'] }}
-                            {{ $reservation['number_of_people'] }}                                
-                            @endif
-                        @endforeach
+                    <div class="text-center">
+                        予約状況
+                    </div>
+
+                        <table class="mt-4 table-auto w-full text-left whitespace-no-wrap">
+                            <thead>
+                                <tr>
+                                    <th
+                                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                        予約者</th>
+                                    <th
+                                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                        予約人数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($reservations as $reservation)
+                                    @if (is_null($reservation['canceled_date']))
+                                        <tr>
+                                            <td class="px-4 py-3">
+                                                {{ $reservation['name'] }}
+                                            </td>
+                                            <td class="px-4 py-3">
+                                                {{ $reservation['number_of_people'] }}
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endforeach
+                            </tbody>
                     @endif
                 </div>
             </div>
