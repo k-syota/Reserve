@@ -25,6 +25,17 @@ class Calendar extends Component
         // dd($this->currentWeek);
     }
 
+    public function getDate($date)
+    {
+        $this->currentDate = $date;
+        $this->currentWeek = [];
+
+        for($i = 0; $i < 7; $i++){
+            $this->day = Carbon::parse($this->currentDate)->addDay($i)->format("m月d日"); //parseでCarbonインスタンスに変換
+            array_push($this->currentWeek,$this->day);
+        }
+    }
+
     public function render()
     {
         return view('livewire.calendar');
