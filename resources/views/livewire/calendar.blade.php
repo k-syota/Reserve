@@ -8,4 +8,8 @@
             {{ $currentWeek[$day] }}        
         @endfor
     </div>
+
+    @foreach ($events as $event)
+        <p>{{ $event->start_date }}</p>        
+    @endforeach
 </div>
