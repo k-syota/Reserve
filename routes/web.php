@@ -34,6 +34,7 @@ Route::get('/', function () {
 
 Route::middleware("can:user-higher")->group(function(){
     Route::get('/dashboard',[ReservationController::class,'dashboard'])->name('dashboard');
+    Route::get('/{id}',[ReservationController::class,'detail'])->name('events.detail');
 });
 
 Route::controller(LivewireTestController::class)->prefix('livewire-test')->group(function(){
