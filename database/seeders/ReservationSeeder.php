@@ -43,7 +43,7 @@ class ReservationSeeder extends Seeder
             [
                 "user_id" => "2",
                 "event_id" => "10",
-                "number_of_people" => "11",
+                "number_of_people" => "5",
                 "canceled_date" => null
             ]
         ]);
