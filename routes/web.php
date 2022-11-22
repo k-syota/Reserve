@@ -36,6 +36,7 @@ Route::get('/', function () {
 Route::middleware("can:user-higher")->group(function(){
     Route::get('/dashboard',[ReservationController::class,'dashboard'])->name('dashboard');
     Route::get('/mypage',[MyPageController::class,'index'])->name('mypage.index');
+    Route::get('/mypage/{id}',[MyPageController::class,'show'])->name('mypage.show');
     Route::get('/{id}',[ReservationController::class,'detail'])->name('events.detail');
     Route::post('/',[ReservationController::class,'reserve'])->name('events.reserve');
 });

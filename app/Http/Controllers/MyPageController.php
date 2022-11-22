@@ -16,11 +16,11 @@ class MyPageController extends Controller
         $user = User::findOrFail(Auth::id());
         $events = $user->events;
         $fromTodayEvents = MyPageService::reservedEvent($events,'fromToday');
-        $fromPastEvents = MyPageService::reservedEvent($events,'past');
+        $pastEvents = MyPageService::reservedEvent($events,'past');
 
         // dd($events);
-        dd($fromPastEvents,$fromTodayEvents);
+        // dd($fromPastEvents,$fromTodayEvents);
 
-        return view('mypage/index',compact('fromTodayEvents','fromPastEvents'));
+        return view('mypage/index',compact('fromTodayEvents','pastEvents'));
     }
 }
